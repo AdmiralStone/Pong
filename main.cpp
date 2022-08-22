@@ -1,5 +1,26 @@
 #include "raylib.h"
 
+struct Ball{
+    float x,y;
+    float speedX,speedY;
+    float radius;
+
+    void Draw(){
+        DrawCircle((int)x,(int)y,radius,WHITE);
+    }
+};
+
+
+struct Paddle{
+    float x,y;
+    float speed;
+    float height,width;
+
+    void Draw(){
+        DrawRectangle((int)x,(int)y,(int)width,(int)height,WHITE);
+    }
+
+};
 int main(){
     // Initilize Window(w,h,title)
     InitWindow(800,600,"Pong");
@@ -7,37 +28,54 @@ int main(){
     // FPS CAP
     SetWindowState(FLAG_VSYNC_HINT);
 
-    float ballX = GetScreenWidth()/2.0f;
-    float ballY = GetScreenHeight()/2.0f;
-    float ballRadius = 5;
-    float ballSpeedX = 300;
-    float ballSpeedY = 300;
+    // Instantiate a new Ball struct object
+    Ball ball;
+    ball.x = GetScreenWidth()/2.0f;
+    ball.y = GetScreenHeight()/2.0f;
+    ball.radius = 5;
+    ball.speedX = 300;
+    ball.speedY = 300;
+
+    // Instantiate a new paddle struct object
+    Paddle lPaddle;
+    lPaddle.x = 50;
+    lPaddle.y = GetScreenHeight()/2-50;
+    lPaddle.width = 10;
+    lPaddle.height = 100;
+    lPaddle.speed = 500;
+
+    Paddle rPaddle;
+    rPaddle.x = GetScreenWidth()-50-10;
+    rPaddle.y = GetScreenHeight()/2-50;
+    rPaddle.width = 10;
+    rPaddle.height = 100;
+    rPaddle.speed = 500;
 
     while(!WindowShouldClose()){
 
         // Ball Move Logic
-        ballX+=ballSpeedX* GetFrameTime();
-        ballY+=ballSpeedY* GetFrameTime();
+        ball.x+=ball.speedX* GetFrameTime();
+        ball.y+=ball.speedY* GetFrameTime();
         
         
-        if(ballY > GetScreenHeight()){
-            ballY = GetScreenHeight();
-            ballSpeedY*=-1;
+        if(ball.y > GetScreenHeight()){
+            ball.y = GetScreenHeight();
+            ball.speedY*=-1;
         }
 
-        if(ballY < 0){
-            ballY = 0;
-            ballSpeedY*=-1;
+        if(ball.y < 0){
+            ball.y = 0;
+            ball.speedY*=-1;
         }
 
-        if(ballX<0){
-            ballX = 0;
-            ballSpeedX *= -1;
+        if(ball.x<0){
+            ball.x = 0;
+            ball.speedX *= -1;
         }
 
-        if(ballX > GetScreenWidth()){
-            ballX = GetScreenWidth();
-            ballSpeedX*=-1;
+        if(ball.x > GetScreenWidth()){
+            ball.x = GetScreenWidth();
+            ball.speedX*=-1;
         }
         
         // Begin the rendering process
@@ -46,13 +84,13 @@ int main(){
             ClearBackground(BLACK);
 
             // Draw a Circle (The Ball)
-            DrawCircle(ballX,ballY,ballRadius,WHITE);
+            ball.Draw();
 
             // Draw the left paddle
-            DrawRectangle(50,GetScreenHeight()/2-50,10,100,WHITE);
+            lPaddle.Draw();
 
             // Draw the Right paddle
-            DrawRectangle(750,GetScreenHeight()/2-50,10,100,WHITE);
+            rPaddle.Draw();
 
 
 
