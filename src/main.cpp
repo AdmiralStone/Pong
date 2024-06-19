@@ -58,12 +58,18 @@ int main() {
             lPaddle.y += lPaddle.speed * GetFrameTime();
         }
 
-        if (IsKeyDown(KEY_UP) && rPaddle.y > 0) {
-            rPaddle.y -= rPaddle.speed * GetFrameTime();
+        if(menu.selectedMode == GameMenu::MULTI_PLAYER){
+            if (IsKeyDown(KEY_UP) && rPaddle.y > 0) {
+                rPaddle.y -= rPaddle.speed * GetFrameTime();
+            }
+            if (IsKeyDown(KEY_DOWN) && rPaddle.y < GetScreenHeight() - 100) {
+                rPaddle.y += rPaddle.speed * GetFrameTime();
+            }
+        }else if(menu.selectedMode == GameMenu::SINGLE_PLAYER && !winnerText){
+            rPaddle.AutoMove(ball.y,GetFrameTime());
         }
-        if (IsKeyDown(KEY_DOWN) && rPaddle.y < GetScreenHeight() - 100) {
-            rPaddle.y += rPaddle.speed * GetFrameTime();
-        }
+
+        
 
         // Check Collision with left paddle
         if (CheckCollisionCircleRec(Vector2{ball.x, ball.y}, ball.radius, lPaddle.getRect())) {
