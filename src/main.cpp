@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "GameMenu.h"
 #include "Ball.h"
 #include "Paddle.h"
 #include <iostream>
@@ -10,6 +11,8 @@ int main() {
     // FPS CAP
     SetWindowState(FLAG_VSYNC_HINT);
 
+    GameMenu menu;
+
     Ball ball;
 
     Paddle lPaddle(50, GetScreenHeight() / 2);
@@ -18,7 +21,14 @@ int main() {
     const char* winnerText = nullptr;
 
     while (!WindowShouldClose()) {
-        // Ball Move Logic
+        if(menu.selectedMode == GameMenu::NONE){
+            BeginDrawing();
+                menu.Draw();
+            EndDrawing();
+            menu.HandleInput();
+
+        }else{
+            // Ball Move Logic
         ball.x += ball.speedX * GetFrameTime();
         ball.y += ball.speedY * GetFrameTime();
 
@@ -91,6 +101,8 @@ int main() {
 
         DrawFPS(10, 10);
         EndDrawing();
+
+        }
     }
 
     CloseWindow();
