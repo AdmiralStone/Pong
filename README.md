@@ -8,7 +8,6 @@ A Pong implemented in C++ using the Raylib library. This project features a clas
 - [Usage](#usage)
 - [Controls](#controls)
 - [Screenshots](#screenshots)
-- [Contributing](#contributing)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
 
