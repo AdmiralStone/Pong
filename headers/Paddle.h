@@ -2,6 +2,7 @@
 #define PADDLE_H
 
 #include "raylib.h"
+#include <cmath>
 
 class Paddle{
     public:
@@ -12,6 +13,7 @@ class Paddle{
         Paddle(float startX, float startY);
         Rectangle getRect();
         void Draw();
+        void AutoMove(float targetY,float deltaTime);
 
 };
 
